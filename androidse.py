@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 from telegram.ext import CommandHandler, MessageHandler, Filters, Updater, Job
 
 token = 'O TOKEN AQUI'
