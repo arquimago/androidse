@@ -19,7 +19,7 @@ def welcome(bot, update):
 	chat_id = update.message.chat.id
 	new_user = update.message.new_chat_members[0].name
 	
-	bemvindo = "Seja muito bem vindo " + new_user + "!!!" + "\n" + "Aproveite o espaço, tire suas duvidas e ajude o crescimento da comunidade!\n Não se esqueça de se inscrever no https://www.meetup.com/pt-BR/android-sergipe/ !"
+	bemvindo = "Seja muito bem vindo " + new_user + "!!!" + "\n" + "Aproveite o espaço, tire suas dúvidas e ajude o crescimento da comunidade!\nNão se esqueça de se inscrever no https://www.meetup.com/pt-BR/android-sergipe/ !"
 		
 	bot.sendMessage(chat_id=chat_id, text=bemvindo)
 
