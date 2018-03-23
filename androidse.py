@@ -16,20 +16,14 @@ start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
 
 def welcome(bot, update):
-	if(update.message.new_chat_member):
-		chat_id = update.message.chat.id
-		new_user = ""
-				
-		if(update.message.new_chat_member.username != ""):
-			new_user = "@" + update.message.new_chat_member.username;
-		else:
-			new_user = update.message.new_chat_member.first_name;
-
-		bemvindo = "Seja muito bem vindo " + new_user + "!!!" + "\n" + "Aproveite o espaço, tire suas duvidas e ajude o crescimento da comunidade!\n Não se esqueça de se inscrever no https://www.meetup.com/pt-BR/android-sergipe/ !"
+	chat_id = update.message.chat.id
+	new_user = update.message.new_chat_members[0].name
+	
+	bemvindo = "Seja muito bem vindo " + new_user + "!!!" + "\n" + "Aproveite o espaço, tire suas duvidas e ajude o crescimento da comunidade!\n Não se esqueça de se inscrever no https://www.meetup.com/pt-BR/android-sergipe/ !"
 		
-		bot.sendMessage(chat_id=chat_id, text=bemvindo)
+	bot.sendMessage(chat_id=chat_id, text=bemvindo)
 
-welcome_handler = MessageHandler(Filters.status_update, welcome)
+welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
 dispatcher.add_handler(welcome_handler)
 
 def git(bot, update):
