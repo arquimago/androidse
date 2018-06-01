@@ -62,6 +62,7 @@ def eventos(bot, update):
 		local = "Endereço: " + evento['venue']['address_1'] + '\n'
 		url = evento['event_url'] + '\n'
 		resposta = nome + descricao + data_foramtada + local + url + '\n\n'
+	print(resposta)
 	bot.sendMessage(chat_id=update.message.chat_id, text=resposta)
 
 eventos_handler = CommandHandler('eventos', eventos)
