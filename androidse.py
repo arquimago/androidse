@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from telegram.ext import CommandHandler, MessageHandler, Filters, Updater, Job
+#from telegram.ext import CommandHandler, MessageHandler, Filters, Updater, Job, 
+from telegram.ext import *
+import datetime
 import urllib.request, json
 import re
 
@@ -51,19 +53,18 @@ def eventos(bot, update):
 	eventos = lista_eventos['results']
 	resposta = ''
 	for evento in eventos:
-		nome = "Evento: " +  evento['name'] +'\n'
+		nome = '<a href="' + evento['event_url'] + '">'
+		nome += "Evento</a>\n" + evento['name'] +'\n\n'
 		descricao = evento['description'] +'\n'
 		descricao = descricao.replace('<br/>', '\n')
-		descricao = "O que?\n" + re.sub('<[^>]+?>', '', descricao)
+		descricao = re.sub('<[^>]+?>', '', descricao)
+		local = "\n<b>Onde?</b> \nLocal:" + evento['venue']['name'] + '\n'
+		local += "Endereço: " + evento['venue']['address_1'] + '\n'
 		timestamp = evento['time']/1000
 		data = datetime.datetime.fromtimestamp(timestamp)
-		data_formatada = "Quando? " + data.strftime('%d/%m %H:%M') + '\n'
-		local = "Onde? \nLocal:" + evento['venue']['name'] + '\n'
-		local = "Endereço: " + evento['venue']['address_1'] + '\n'
-		url = evento['event_url'] + '\n'
-		resposta = nome + descricao + data_foramtada + local + url + '\n\n'
-	print(resposta)
-	bot.sendMessage(chat_id=update.message.chat_id, text=resposta)
+		data_formatada = data.strftime('Dia %d/%m às %H:%M \n')
+		resposta = nome + descricao + "\n<b>Quando?</b> \n" + data_formatada + local
+	bot.sendMessage(chat_id=update.message.chat_id, text=resposta, parse_mode= "HTML" , disable_web_page_preview=True)
 
 eventos_handler = CommandHandler('eventos', eventos)
 dispatcher.add_handler(eventos_handler)
