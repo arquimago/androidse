@@ -3,7 +3,7 @@
 
 from telegram.ext import CommandHandler, MessageHandler, Filters, Updater, Job
 
-token = 'O TOKEN AQUI'
+token = '517831286:AAHd6UkBKUyRfMHJWamIx59IVMw9j_IPqmI'
 
 
 updater = Updater(token=token)
@@ -19,7 +19,7 @@ def welcome(bot, update):
 	chat_id = update.message.chat.id
 	new_user = update.message.new_chat_members[0].name
 	
-	bemvindo = "Seja muito bem vindo " + new_user + "!!!" + "\n" + "Aproveite o espaço, tire suas dúvidas e ajude o crescimento da comunidade!\nNão se esqueça de se inscrever no https://www.meetup.com/pt-BR/android-sergipe/ !"
+	bemvindo = "Ei " + new_user + ", que bom te ver por aqui!!!" + "\n" + "Aproveite o espaço, tire suas dúvidas e ajude o crescimento da comunidade!\nNão se esqueça de se inscrever no https://www.meetup.com/pt-BR/android-sergipe/ !"
 		
 	bot.sendMessage(chat_id=chat_id, text=bemvindo)
 
