@@ -40,7 +40,7 @@ def welcome(bot, update):
 #dispatcher.add_handler(welcome_handler)
 
 def git(bot, update):
-	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!")
+	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!", disable_web_page_preview=True)
 
 git_handler = CommandHandler('git', git)
 dispatcher.add_handler(git_handler)
@@ -71,7 +71,7 @@ dispatcher.add_handler(eventos_handler)
 
 
 def docs(bot, update):
-	bot.sendMessage(chat_id=update.message.chat_id, text="Os links para documentos estão disponiveis no https://gist.github.com/arquimago/1c4a3dd775fc8d4fbc0d3e0aa617bb90")
+	bot.sendMessage(chat_id=update.message.chat_id, text="Os links para documentos estão disponiveis no https://gist.github.com/arquimago/1c4a3dd775fc8d4fbc0d3e0aa617bb90", disable_web_page_preview=True)
 
 docs_handler = CommandHandler('docs', docs)
 dispatcher.add_handler(docs_handler)
