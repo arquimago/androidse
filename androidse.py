@@ -36,8 +36,8 @@ def welcome(bot, update):
 		
 	bot.sendMessage(chat_id=chat_id, text=bemvindo)
 
-welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
-dispatcher.add_handler(welcome_handler)
+#welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
+#dispatcher.add_handler(welcome_handler)
 
 def git(bot, update):
 	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!")
