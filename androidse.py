@@ -73,7 +73,7 @@ eventos_handler = CommandHandler('eventos', eventos)
 dispatcher.add_handler(eventos_handler)
 
 def help(bot, update):
-	texto = "Isto fica feliz em ser útil!\n"+
+	texto = "Isto fica feliz em ser útil!\n"
 	texto += "Use os comandos abaixo para interagir com o bot\n"
 	texto += "/start - Inicia o bot\n"
 	texto += "/help - Mostra esta lista de comandos\n"
