@@ -10,6 +10,8 @@ arqAdmins = open('admnis.token','r')
 admins = arqAdmins.readlines()
 arqAdmins.close()
 
+chatAdmins = -1001315295672
+
 for i in range(0,len(admins)):
 	admins[i] = admins[i].strip('\n')
 
@@ -68,12 +70,16 @@ def querocontribuir(bot, update):
 	nome = update.message.from_user.username
 	if nome in admins:
 		texto = "Hey @"+nome+", você sabe exatamente o que fazer para contribuir né?"
-		bot.sendMessage(chat_id=-1001315295672, text=texto)
+		bot.sendMessage(chat_id=chatAdmins, text=texto)
 	else:
 		texto = "Olá "+nome+" que bom que você tem interesse em contribuir!\n Entraremos em contato em breve!"
 		bot.sendMessage(chat_id=update.message.chat_id, text=texto)
 		texto = "Alô Galera!! Fiquem atentos! <b>"+nome+"</b> quer ajudar no crescimento da comunidade!"
-		bot.sendMessage(chat_id=-1001315295672, text=texto, parse_mode="HTML")
+		bot.sendMessage(chat_id=chatAdmins, text=texto, parse_mode="HTML")
+
+def anuncio(bot, update):
+	#TODO
+	#Aceitar comando apenas de admins e enviar anuncios para o canal principal
 
 def main():
 
@@ -93,9 +99,6 @@ def main():
 	start_handler = CommandHandler('start', start)
 	dispatcher.add_handler(start_handler)
 
-	#welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
-	#dispatcher.add_handler(welcome_handler)
-
 	git_handler = CommandHandler('git', git)
 	dispatcher.add_handler(git_handler)
 
@@ -111,8 +114,16 @@ def main():
 	querocontribuir_handler = CommandHandler('querocontribuir', querocontribuir)
 	dispatcher.add_handler(querocontribuir_handler)
 
+	#Ao implementar o Anuncio descomentar as linhas
+	#anuncio_handler = CommandHandler('anuncio', anuncio)
+	#dispatcher.add_handler(anuncio_handler)
+
+	#Função de boas vindas, desativada pra evitar flood
+	#welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
+	#dispatcher.add_handler(welcome_handler)
+
 	updater.start_polling()
 
 
 if __name__ == '__main__':
-    main()	
+	main()
