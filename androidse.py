@@ -72,6 +72,18 @@ def eventos(bot, update):
 eventos_handler = CommandHandler('eventos', eventos)
 dispatcher.add_handler(eventos_handler)
 
+def help(bot, update):
+	texto = "Isto fica feliz em ser útil!\n"+
+	texto += "Use os comandos abaixo para interagir com o bot\n"
+	texto += "/start - Inicia o bot\n"
+	texto += "/help - Mostra esta lista de comandos\n"
+	texto += "/git - Retorna o repositório do bot no github\n"
+	texto += "/eventos - Lista os próximos eventos do Meetup\n"
+	texto += "/docs - Envia o link com os links para documentos de eventos passados\n"
+	texto += "/querocontribuir - Use este comando se quiser contribuir com a comunidade!\n"
+	bot.sendMessage(chat_id=update.message.chat_id, text=texto)
+help_handler = CommandHandler('help', help)
+dispatcher.add_handler(help_handler)	
 
 def docs(bot, update):
 	bot.sendMessage(chat_id=update.message.chat_id, text="Os links para documentos estão disponiveis no https://gist.github.com/arquimago/1c4a3dd775fc8d4fbc0d3e0aa617bb90")
