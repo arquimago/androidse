@@ -77,7 +77,7 @@ def querocontribuir(bot, update):
 		texto = "Alô Galera!! Fiquem atentos! <b>"+nome+"</b> quer ajudar no crescimento da comunidade!"
 		bot.sendMessage(chat_id=chatAdmins, text=texto, parse_mode="HTML")
 
-def anuncio(bot, update):
+#def anuncio(bot, update):
 	#TODO
 	#Aceitar comando apenas de admins e enviar anuncios para o canal principal
 
