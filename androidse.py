@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-#from telegram.ext import CommandHandler, MessageHandler, Filters, Updater, Job, 
 from telegram.ext import *
 import datetime
 import urllib.request, json
@@ -36,11 +35,11 @@ def welcome(bot, update):
 		
 	bot.sendMessage(chat_id=chat_id, text=bemvindo)
 
-#welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
-#dispatcher.add_handler(welcome_handler)
+welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
+dispatcher.add_handler(welcome_handler)
 
 def git(bot, update):
-	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!", disable_web_page_preview=True)
+	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!")
 
 git_handler = CommandHandler('git', git)
 dispatcher.add_handler(git_handler)
@@ -54,16 +53,18 @@ def eventos(bot, update):
 	resposta = ''
 	for evento in eventos:
 		nome = '<a href="' + evento['event_url'] + '">'
-		nome += "Evento</a>\n" + evento['name'] +'\n\n'
+		nome += "Evento: " + evento['name'] +'</a>\n\n'
 		descricao = evento['description'] +'\n'
 		descricao = descricao.replace('<br/>', '\n')
 		descricao = re.sub('<[^>]+?>', '', descricao)
-		local = "\n<b>Onde?</b> \nLocal:" + evento['venue']['name'] + '\n'
-		local += "Endereço: " + evento['venue']['address_1'] + '\n'
+		try:
+			local = "\n<b>Onde?</b> \nLocal: " + evento['venue']['name'] + '\n' + "Endereço: " + evento['venue']['address_1'] + '\n'
+		except KeyError:
+			local = "\n<b>Sem Local Definido</b>\n"
 		timestamp = evento['time']/1000
 		data = datetime.datetime.fromtimestamp(timestamp)
 		data_formatada = data.strftime('Dia %d/%m às %H:%M \n')
-		resposta = nome + descricao + "\n<b>Quando?</b> \n" + data_formatada + local
+		resposta += nome + descricao + "\n<b>Quando?</b> \n" + data_formatada + local + "\n"
 	bot.sendMessage(chat_id=update.message.chat_id, text=resposta, parse_mode= "HTML" , disable_web_page_preview=True)
 
 eventos_handler = CommandHandler('eventos', eventos)
@@ -71,7 +72,7 @@ dispatcher.add_handler(eventos_handler)
 
 
 def docs(bot, update):
-	bot.sendMessage(chat_id=update.message.chat_id, text="Os links para documentos estão disponiveis no https://gist.github.com/arquimago/1c4a3dd775fc8d4fbc0d3e0aa617bb90", disable_web_page_preview=True)
+	bot.sendMessage(chat_id=update.message.chat_id, text="Os links para documentos estão disponiveis no https://gist.github.com/arquimago/1c4a3dd775fc8d4fbc0d3e0aa617bb90")
 
 docs_handler = CommandHandler('docs', docs)
 dispatcher.add_handler(docs_handler)
