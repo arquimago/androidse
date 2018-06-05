@@ -6,28 +6,15 @@ import datetime
 import urllib.request, json
 import re
 
-arqTokens = open('androidse.token','r')
-token = arqTokens.readlines()
+arqAdmins = open('admnis.token','r')
+admins = arqAdmins.readlines()
+arqAdmins.close()
 
-for i in range(0,2):
-	token[i] = token[i].strip('\n')
-
-arqTokens.close()
-
-token_telegram = token[0]
-meetup_token = token[1]
-
-updater = Updater(token=token_telegram)
-dispatcher = updater.dispatcher
-
-admins = ["Arquimago", "Jcosilva" , "alicefranco" , "programadorthi", "YgorCes4r"]
-
+for i in range(0,len(admins)):
+	admins[i] = admins[i].strip('\n')
 
 def start(bot, update):	  
 	bot.sendMessage(chat_id=update.message.chat_id, text="Isto fica feliz em ser útil! \n Estou ajudando o canal @androidse a crescer!!")
-
-start_handler = CommandHandler('start', start)
-dispatcher.add_handler(start_handler)
 
 def welcome(bot, update):
 	chat_id = update.message.chat.id
@@ -37,15 +24,8 @@ def welcome(bot, update):
 		
 	bot.sendMessage(chat_id=chat_id, text=bemvindo)
 
-#welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
-#dispatcher.add_handler(welcome_handler)
-
 def git(bot, update):
 	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!")
-
-git_handler = CommandHandler('git', git)
-dispatcher.add_handler(git_handler)
-
 
 def eventos(bot, update):
 	url = "https://api.meetup.com/2/events?key="+meetup_token+"&group_urlname=android-sergipe&sign=true"
@@ -69,9 +49,6 @@ def eventos(bot, update):
 		resposta += nome + descricao + "\n<b>Quando?</b> \n" + data_formatada + local + "\n"
 	bot.sendMessage(chat_id=update.message.chat_id, text=resposta, parse_mode= "HTML" , disable_web_page_preview=True)
 
-eventos_handler = CommandHandler('eventos', eventos)
-dispatcher.add_handler(eventos_handler)
-
 def help(bot, update):
 	texto = "Isto fica feliz em ser útil!\n"
 	texto += "Use os comandos abaixo para interagir com o bot\n"
@@ -82,14 +59,9 @@ def help(bot, update):
 	texto += "/docs - Envia o link com os links para documentos de eventos passados\n"
 	texto += "/querocontribuir - Use este comando se quiser contribuir com a comunidade!\n"
 	bot.sendMessage(chat_id=update.message.chat_id, text=texto)
-help_handler = CommandHandler('help', help)
-dispatcher.add_handler(help_handler)	
 
 def docs(bot, update):
 	bot.sendMessage(chat_id=update.message.chat_id, text="Os links para documentos estão disponiveis no https://gist.github.com/arquimago/1c4a3dd775fc8d4fbc0d3e0aa617bb90")
-
-docs_handler = CommandHandler('docs', docs)
-dispatcher.add_handler(docs_handler)
 
 def querocontribuir(bot, update):
 	global admins
@@ -103,8 +75,44 @@ def querocontribuir(bot, update):
 		texto = "Alô Galera!! Fiquem atentos! <b>"+nome+"</b> quer ajudar no crescimento da comunidade!"
 		bot.sendMessage(chat_id=-1001315295672, text=texto, parse_mode="HTML")
 
-querocontribuir_handler = CommandHandler('querocontribuir', querocontribuir)
-dispatcher.add_handler(querocontribuir_handler)
+def main():
+
+	arqTokens = open('androidse.token','r')
+	token = arqTokens.readlines()
+	arqTokens.close()
+
+	for i in range(0,2):
+		token[i] = token[i].strip('\n')
+
+	token_telegram = token[0]
+	meetup_token = token[1]
+
+	updater = Updater(token=token_telegram)
+	dispatcher = updater.dispatcher
+	
+	start_handler = CommandHandler('start', start)
+	dispatcher.add_handler(start_handler)
+
+	#welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
+	#dispatcher.add_handler(welcome_handler)
+
+	git_handler = CommandHandler('git', git)
+	dispatcher.add_handler(git_handler)
+
+	eventos_handler = CommandHandler('eventos', eventos)
+	dispatcher.add_handler(eventos_handler)
+
+	help_handler = CommandHandler('help', help)
+	dispatcher.add_handler(help_handler)
+
+	docs_handler = CommandHandler('docs', docs)
+	dispatcher.add_handler(docs_handler)
+
+	querocontribuir_handler = CommandHandler('querocontribuir', querocontribuir)
+	dispatcher.add_handler(querocontribuir_handler)
+
+	updater.start_polling()
 
 
-updater.start_polling()
+if __name__ == '__main__':
+    main()	
