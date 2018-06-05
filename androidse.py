@@ -6,7 +6,7 @@ import datetime
 import urllib.request, json
 import re
 
-arqAdmins = open('admnis.token','r')
+arqAdmins = open('admins.token','r')
 admins = arqAdmins.readlines()
 arqAdmins.close()
 
