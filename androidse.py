@@ -20,6 +20,8 @@ meetup_token = token[1]
 updater = Updater(token=token_telegram)
 dispatcher = updater.dispatcher
 
+admins = ["Arquimago", "Jcosilva" , "alicefranco" , "programadorthi", "YgorCes4r"]
+
 
 def start(bot, update):	  
 	bot.sendMessage(chat_id=update.message.chat_id, text="Isto fica feliz em ser útil! \n Estou ajudando o canal @androidse a crescer!!")
@@ -35,8 +37,8 @@ def welcome(bot, update):
 		
 	bot.sendMessage(chat_id=chat_id, text=bemvindo)
 
-welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
-dispatcher.add_handler(welcome_handler)
+#welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
+#dispatcher.add_handler(welcome_handler)
 
 def git(bot, update):
 	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!")
@@ -76,6 +78,21 @@ def docs(bot, update):
 
 docs_handler = CommandHandler('docs', docs)
 dispatcher.add_handler(docs_handler)
+
+def querocontribuir(bot, update):
+	global admins
+	nome = update.message.from_user.username
+	if nome in admins:
+		texto = "Hey @"+nome+", você sabe exatamente o que fazer para contribuir né?"
+		bot.sendMessage(chat_id=-1001315295672, text=texto)
+	else:
+		texto = "Olá "+nome+" que bom que você tem interesse em contribuir!\n Entraremos em contato em breve!"
+		bot.sendMessage(chat_id=update.message.chat_id, text=texto)
+		texto = "Alô Galera!! Fiquem atentos! <b>"+nome+"</b> quer ajudar no crescimento da comunidade!"
+		bot.sendMessage(chat_id=-1001315295672, text=texto, parse_mode="HTML")
+
+querocontribuir_handler = CommandHandler('querocontribuir', querocontribuir)
+dispatcher.add_handler(querocontribuir_handler)
 
 
 updater.start_polling()
