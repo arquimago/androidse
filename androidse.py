@@ -96,19 +96,14 @@ def querocontribuir(bot, update):
 def anuncio(bot, update):
 	chat_id = update.message.chat.id
 	nome = update.message.from_user.username
-	if(chat_id == chatAdmins or nome in admins ):
-		if(update.message.text.split()[0].lower() == ".anuncio"):
-			texto = update.message.text.split()
-			texto[0] = "<b>ANUNCIO:</b>\n"
-			texto = " ".join(texto)
-			print(texto)
-			try:
-				bot.sendMessage(chat_id=update.message.chat_id, text=texto, parse_mode= "HTML")
-				bot.sendMessage(chat_id=chatAdmins, text="Anucio feito com sucesso!")
-			except Exception as e:
-				print(e)
-				bot.sendMessage(chat_id=chatAdmins, text="Anucio falhou!")
-
+	comando = update.message.text.split()[0].lower()
+	if((chat_id == chatAdmins or nome in admins) and comando == ".anuncio" ):
+		texto = update.message.text.split()
+		texto[0] = "<b>ANUNCIO:</b>\n"
+		texto = " ".join(texto)
+		print(texto)
+		bot.sendMessage(chat_id=@AndroidSE, text=texto, parse_mode= "HTML")
+		bot.sendMessage(chat_id=chatAdmins, text="Anucio feito com sucesso!")
 
 def main():
 	updater = Updater(token=token_telegram)
