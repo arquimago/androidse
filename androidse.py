@@ -102,7 +102,7 @@ def anuncio(bot, update):
 		texto[0] = "<b>ANUNCIO:</b>\n"
 		texto = " ".join(texto)
 		print(texto)
-		bot.sendMessage(chat_id=@AndroidSE, text=texto, parse_mode= "HTML")
+		bot.sendMessage(chat_id="@AndroidSE", text=texto, parse_mode= "HTML")
 		bot.sendMessage(chat_id=chatAdmins, text="Anucio feito com sucesso!")
 
 def main():
