@@ -100,11 +100,11 @@ def anuncio(bot, update):
 	if((chat_id == chatAdmins or nome in admins) and comando == ".anuncio" ):
 		texto = update.message.text.split()
 		texto[0] = "<b>ANUNCIO:</b>\n"
-		if(len(texto) < 5):
-			bot.sendMessage(chat_id=update.message.chat_id, text="Anuncio muito curto!!")
+		if(len(texto) < 4):
+			bot.sendMessage(chat_id=update.message.chat_id, text="Anuncio muito curto! Falha no envio!")
 		else:
 			texto = " ".join(texto)
-			bot.sendMessage(chat_id=@AndroidSE, text=texto, parse_mode= "HTML")
+			bot.sendMessage(chat_id="@AndroidSE", text=texto, parse_mode= "HTML")
 			bot.sendMessage(chat_id=chatAdmins, text="Anucio feito com sucesso!")
 
 def main():
