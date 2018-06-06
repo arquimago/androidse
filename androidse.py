@@ -6,6 +6,16 @@ import datetime
 import urllib.request, json
 import re
 
+arqTokens = open('androidse.token','r')
+token = arqTokens.readlines()
+arqTokens.close()
+
+for i in range(0,2):
+	token[i] = token[i].strip('\n')
+
+token_telegram = token[0]
+meetup_token = token[1]
+
 arqAdmins = open('admins.token','r')
 admins = arqAdmins.readlines()
 arqAdmins.close()
@@ -30,7 +40,9 @@ def git(bot, update):
 	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!")
 
 def eventos(bot, update):
+	print("eita caralho")
 	url = "https://api.meetup.com/2/events?key="+meetup_token+"&group_urlname=android-sergipe&sign=true"
+	print(url)
 	url_r = urllib.request.urlopen(url)
 	lista_eventos = json.loads(url_r.read().decode())
 	eventos = lista_eventos['results']
@@ -41,15 +53,20 @@ def eventos(bot, update):
 		descricao = evento['description'] +'\n'
 		descricao = descricao.replace('<br/>', '\n')
 		descricao = re.sub('<[^>]+?>', '', descricao)
+		print("chegou 1")
 		try:
 			local = "\n<b>Onde?</b> \nLocal: " + evento['venue']['name'] + '\n' + "Endereço: " + evento['venue']['address_1'] + '\n'
+			print("chegou 2")
 		except KeyError:
 			local = "\n<b>Sem Local Definido</b>\n"
+			print("chegou erro")
 		timestamp = evento['time']/1000
 		data = datetime.datetime.fromtimestamp(timestamp)
 		data_formatada = data.strftime('Dia %d/%m às %H:%M \n')
 		resposta += nome + descricao + "\n<b>Quando?</b> \n" + data_formatada + local + "\n"
+		print("chegou final")
 	bot.sendMessage(chat_id=update.message.chat_id, text=resposta, parse_mode= "HTML" , disable_web_page_preview=True)
+	print("chegou resposta")
 
 def help(bot, update):
 	texto = "Isto fica feliz em ser útil!\n"
@@ -66,7 +83,6 @@ def docs(bot, update):
 	bot.sendMessage(chat_id=update.message.chat_id, text="Os links para documentos estão disponiveis no https://gist.github.com/arquimago/1c4a3dd775fc8d4fbc0d3e0aa617bb90")
 
 def querocontribuir(bot, update):
-	global admins
 	nome = update.message.from_user.username
 	if nome in admins:
 		texto = "Hey @"+nome+", você sabe exatamente o que fazer para contribuir né?"
@@ -77,22 +93,24 @@ def querocontribuir(bot, update):
 		texto = "Alô Galera!! Fiquem atentos! <b>"+nome+"</b> quer ajudar no crescimento da comunidade!"
 		bot.sendMessage(chat_id=chatAdmins, text=texto, parse_mode="HTML")
 
-#def anuncio(bot, update):
-	#TODO
-	#Aceitar comando apenas de admins e enviar anuncios para o canal principal
+def anuncio(bot, update):
+	chat_id = update.message.chat.id
+	nome = update.message.from_user.username
+	if(chat_id == chatAdmins or nome in admins ):
+		if(update.message.text.split()[0].lower() == ".anuncio"):
+			texto = update.message.text.split()
+			texto[0] = "<b>ANUNCIO:</b>\n"
+			texto = " ".join(texto)
+			print(texto)
+			try:
+				bot.sendMessage(chat_id=update.message.chat_id, text=texto, parse_mode= "HTML")
+				bot.sendMessage(chat_id=chatAdmins, text="Anucio feito com sucesso!")
+			except Exception as e:
+				print(e)
+				bot.sendMessage(chat_id=chatAdmins, text="Anucio falhou!")
+
 
 def main():
-
-	arqTokens = open('androidse.token','r')
-	token = arqTokens.readlines()
-	arqTokens.close()
-
-	for i in range(0,2):
-		token[i] = token[i].strip('\n')
-
-	token_telegram = token[0]
-	meetup_token = token[1]
-
 	updater = Updater(token=token_telegram)
 	dispatcher = updater.dispatcher
 	
@@ -114,9 +132,8 @@ def main():
 	querocontribuir_handler = CommandHandler('querocontribuir', querocontribuir)
 	dispatcher.add_handler(querocontribuir_handler)
 
-	#Ao implementar o Anuncio descomentar as linhas
-	#anuncio_handler = CommandHandler('anuncio', anuncio)
-	#dispatcher.add_handler(anuncio_handler)
+	anuncio_handler = MessageHandler(Filters.text, anuncio)
+	updater.dispatcher.add_handler(anuncio_handler)
 
 	#Função de boas vindas, desativada pra evitar flood
 	#welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
