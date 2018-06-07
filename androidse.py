@@ -28,6 +28,8 @@ for i in range(0,len(admins)):
 	admins[i] = admins[i].strip('\n')
 try:
 	admins.remove('')
+except Exception as e:
+	print("Deu erro aqui na lista de admins olha só: "+e)
 
 arqLinguagens = open('linguagens.txt','r')
 linguagens = arqLinguagens.readlines()
@@ -37,6 +39,9 @@ for i in range(0,len(linguagens)):
 	linguagens[i] = linguagens[i].strip('\n')
 try:
 	linguagens.remove('')
+except Exception as e:
+	print("Deu erro aqui na lista de linguagens olha só: "+e)
+
 
 def start(bot, update):	  
 	bot.sendMessage(chat_id=update.message.chat_id, text="Isto fica feliz em ser útil! \n Estou ajudando o canal @androidse a crescer!!")
@@ -133,6 +138,8 @@ def conversas(bot, update):
 					respostas[i] = respostas[i].strip('\n')
 				try:
 					respostas.remove('')
+				except Exception as e:
+					print("Deu erro aqui na zoeira de linguagens, olha só: "+e)
 				resposta = respostas[randint(0,numRespostas)]
 				print(sorteio)
 				print(resposta)
