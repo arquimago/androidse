@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from random import randint
+from random import randint, shuffle
 from telegram.ext import *
 import datetime
 import urllib.request, json
@@ -105,6 +105,7 @@ def querocontribuir(bot, update):
 		bot.sendMessage(chat_id=chatAdmins, text=texto, parse_mode="HTML")
 
 def conversas(bot, update):
+	shuffle(linguagens)
 	chat_id = update.message.chat.id
 	frase = update.message.text.lower()
 	nome = update.message.from_user.username
