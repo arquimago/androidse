@@ -40,18 +40,14 @@ def start(bot, update):
 def welcome(bot, update):
 	chat_id = update.message.chat.id
 	new_user = update.message.new_chat_members[0].name
-	
 	bemvindo = "Ei " + new_user + ", que bom te ver por aqui!!!" + "\n" + "Aproveite o espaço, tire suas dúvidas e ajude o crescimento da comunidade!"
-		
 	bot.sendMessage(chat_id=chat_id, text=bemvindo)
 
 def git(bot, update):
 	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!")
 
 def eventos(bot, update):
-	print("eita caralho")
 	url = "https://api.meetup.com/2/events?key="+meetup_token+"&group_urlname=android-sergipe&sign=true"
-	print(url)
 	url_r = urllib.request.urlopen(url)
 	lista_eventos = json.loads(url_r.read().decode())
 	eventos = lista_eventos['results']
@@ -62,20 +58,15 @@ def eventos(bot, update):
 		descricao = evento['description'] +'\n'
 		descricao = descricao.replace('<br/>', '\n')
 		descricao = re.sub('<[^>]+?>', '', descricao)
-		print("chegou 1")
 		try:
 			local = "\n<b>Onde?</b> \nLocal: " + evento['venue']['name'] + '\n' + "Endereço: " + evento['venue']['address_1'] + '\n'
-			print("chegou 2")
 		except KeyError:
 			local = "\n<b>Sem Local Definido</b>\n"
-			print("chegou erro")
 		timestamp = evento['time']/1000
 		data = datetime.datetime.fromtimestamp(timestamp)
 		data_formatada = data.strftime('Dia %d/%m às %H:%M \n')
 		resposta += nome + descricao + "\n<b>Quando?</b> \n" + data_formatada + local + "\n"
-		print("chegou final")
 	bot.sendMessage(chat_id=update.message.chat_id, text=resposta, parse_mode= "HTML" , disable_web_page_preview=True)
-	print("chegou resposta")
 
 def help(bot, update):
 	texto = "Isto fica feliz em ser útil!\n"
@@ -108,13 +99,14 @@ def conversas(bot, update):
 	nome = update.message.from_user.username
 	comando = update.message.text.split()[0].lower()
 	sorteio = randint(0,100)
+	print(sorteio)
 	if (chat_id == chatAdmins or nome in admins) and comando == ".anuncio":
 		msg = update.message.text.split()
 		msg.remove(".anuncio")
 		msg = " ".join(msg)
 		texto = "<b>ANUNCIO:</b>\n" + msg
 		if(len(texto.split()) < 4):
-			bot.sendMessage(chat_id=update.message.chat_id, text="Anuncio muito curto!!")
+			bot.sendMessage(chat_id=chat_id, text="Anuncio muito curto!!")
 		else:
 			bot.sendMessage(chat_id=chatPrincipal, text=texto, parse_mode= "HTML")
 			bot.sendMessage(chat_id=chatAdmins, text="Anucio feito com sucesso!")
@@ -124,21 +116,23 @@ def conversas(bot, update):
 		texto = " ".join(texto)
 		print(texto)
 		bot.sendMessage(chat_id=chatPrincipal, text=texto, parse_mode= "HTML")
-		bot.sendMessage(chat_id=update.message.chat_id, text="Eu amo a zoeira!")
+		bot.sendMessage(chat_id=chat_id, text="Eu amo a zoeira!")
 	elif sorteio<20:
+		print("entrou")
 		for l in linguagens:
 			if l in frase:
 				arquivo = l+".txt"
 				arqRespostas = open(arquivo,'r')		
 				respostas = arqRespostas.readlines()
 				arqRespostas.close()
+				print("ate ja leu o arquivo")
 				for i in range(0,len(respostas)):
 					respostas[i] = respostas[i].strip('\n')
 				resposta = respostas[randint(0,len(respostas))]
 				prompt = "o bot falou de "+ l + "porque tirou um "+ sorteio+" no dado"
 				print(prompt)
 				break
-		bot.sendMessage(chat_id=update.message.chat_id, text=resposta)
+		bot.sendMessage(chat_id=chat_id, text=resposta)
 
 def main():
 	updater = Updater(token=token_telegram)
