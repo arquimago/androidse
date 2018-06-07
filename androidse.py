@@ -26,6 +26,7 @@ chatPrincipal = "@AndroidSE"
 
 for i in range(0,len(admins)):
 	admins[i] = admins[i].strip('\n')
+admins.remove('')
 
 arqLinguagens = open('linguagens.txt','r')
 linguagens = arqLinguagens.readlines()
@@ -33,6 +34,7 @@ arqLinguagens.close()
 
 for i in range(0,len(linguagens)):
 	linguagens[i] = linguagens[i].strip('\n')
+linguagens.remove('')
 
 def start(bot, update):	  
 	bot.sendMessage(chat_id=update.message.chat_id, text="Isto fica feliz em ser útil! \n Estou ajudando o canal @androidse a crescer!!")
@@ -99,7 +101,6 @@ def conversas(bot, update):
 	nome = update.message.from_user.username
 	comando = update.message.text.split()[0].lower()
 	sorteio = randint(0,100)
-	print(sorteio)
 	if (chat_id == chatAdmins or nome in admins) and comando == ".anuncio":
 		msg = update.message.text.split()
 		msg.remove(".anuncio")
@@ -118,6 +119,7 @@ def conversas(bot, update):
 		bot.sendMessage(chat_id=chatPrincipal, text=texto, parse_mode= "HTML")
 		bot.sendMessage(chat_id=chat_id, text="Eu amo a zoeira!")
 	elif sorteio<20:
+		resposta = ""
 		for l in linguagens:
 			if l in frase:
 				arquivo = l+".txt"
@@ -125,9 +127,12 @@ def conversas(bot, update):
 				respostas = arqRespostas.readlines()
 				arqRespostas.close()
 				numRespostas = len(respostas)
+				for i in range(0,numRespostas):
+					respostas[i] = respostas[i].strip('\n')
+				respostas.remove('')
 				resposta = respostas[randint(0,numRespostas)]
-				prompt = "o bot falou de "+ l + "porque tirou um "+ sorteio+" no dado"
-				print(prompt)
+				print(sorteio)
+				print(resposta)
 				break
 		bot.sendMessage(chat_id=chat_id, text=resposta)
 
