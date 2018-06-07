@@ -26,7 +26,8 @@ chatPrincipal = "@AndroidSE"
 
 for i in range(0,len(admins)):
 	admins[i] = admins[i].strip('\n')
-admins.remove('')
+try:
+	admins.remove('')
 
 arqLinguagens = open('linguagens.txt','r')
 linguagens = arqLinguagens.readlines()
@@ -34,7 +35,8 @@ arqLinguagens.close()
 
 for i in range(0,len(linguagens)):
 	linguagens[i] = linguagens[i].strip('\n')
-linguagens.remove('')
+try:
+	linguagens.remove('')
 
 def start(bot, update):	  
 	bot.sendMessage(chat_id=update.message.chat_id, text="Isto fica feliz em ser útil! \n Estou ajudando o canal @androidse a crescer!!")
@@ -129,7 +131,8 @@ def conversas(bot, update):
 				numRespostas = len(respostas)
 				for i in range(0,numRespostas):
 					respostas[i] = respostas[i].strip('\n')
-				respostas.remove('')
+				try:
+					respostas.remove('')
 				resposta = respostas[randint(0,numRespostas)]
 				print(sorteio)
 				print(resposta)
