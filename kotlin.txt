@@ -1,0 +1,6 @@
+Kotlin é a melhor linguagem para o Android Nativo!
+Que bom que estamos falando disto!
+Vamos aprender um pouco mais?
+As vezes penso se eu não poderia ter sido escrito em Kotlin.
+Dúvidas? Chama o Caique!
+A verbosidade do java cansa, ainda bem que temos Kotlin!
