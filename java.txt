@@ -1,0 +1,6 @@
+Java? Ninguém merece...
+Não use drogas!
+Você já ouviu falar de Kotlin?
+Um "Hello World" em java tem quantas linhas mesmo?
+Houve um tempo que as pessoas não tinham opção e usavam Eclipse, tenho pena delas.
+Vai aqui uma indicação: https://br.udacity.com/course/kotlin-for-android-developers--ud888
