@@ -29,7 +29,8 @@ for i in range(0,len(admins)):
 try:
 	admins.remove('')
 except Exception as e:
-	print("Deu erro aqui na lista de admins olha só: "+e)
+	print("Deu erro aqui na lista de admins olha só: ")
+	print(e)
 
 arqLinguagens = open('linguagens.txt','r')
 linguagens = arqLinguagens.readlines()
@@ -40,7 +41,8 @@ for i in range(0,len(linguagens)):
 try:
 	linguagens.remove('')
 except Exception as e:
-	print("Deu erro aqui na lista de linguagens olha só: "+e)
+	print("Deu erro aqui na lista de linguagens olha só: ")
+	print(e)
 
 
 def start(bot, update):	  
@@ -139,7 +141,8 @@ def conversas(bot, update):
 				try:
 					respostas.remove('')
 				except Exception as e:
-					print("Deu erro aqui na zoeira de linguagens, olha só: "+e)
+					print("Deu erro aqui na zoeira de linguagens, olha só: ")
+					print(e)
 				resposta = respostas[randint(0,numRespostas)]
 				print(sorteio)
 				print(resposta)
