@@ -125,7 +125,7 @@ def conversas(bot, update):
 		print(msg)
 		bot.sendMessage(chat_id=chatPrincipal, text=texto, parse_mode= "HTML")
 		bot.sendMessage(chat_id=update.message.chat_id, text="Eu amo a zoeira!")
-	elif sorteio<15:
+	elif sorteio<20:
 		for l in linguagens:
 			if l in frase:
 				arquivo = l+".txt"
