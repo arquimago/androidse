@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+from random import randint
 from telegram.ext import *
 import datetime
 import urllib.request, json
@@ -21,9 +22,17 @@ admins = arqAdmins.readlines()
 arqAdmins.close()
 
 chatAdmins = -1001315295672
+chatPrincipal = "@AndroidSE"
 
 for i in range(0,len(admins)):
 	admins[i] = admins[i].strip('\n')
+
+arqLinguagens = open('linguagens.txt','r')
+linguagens = arqLinguagens.readlines()
+arqLinguagens.close()
+
+for i in range(0,len(linguagens)):
+	linguagens[i] = linguagens[i].strip('\n')
 
 def start(bot, update):	  
 	bot.sendMessage(chat_id=update.message.chat_id, text="Isto fica feliz em ser útil! \n Estou ajudando o canal @androidse a crescer!!")
@@ -93,19 +102,42 @@ def querocontribuir(bot, update):
 		texto = "Alô Galera!! Fiquem atentos! <b>"+nome+"</b> quer ajudar no crescimento da comunidade!"
 		bot.sendMessage(chat_id=chatAdmins, text=texto, parse_mode="HTML")
 
-def anuncio(bot, update):
+def conversas(bot, update):
 	chat_id = update.message.chat.id
+	frase = update.message.text.lower()
 	nome = update.message.from_user.username
 	comando = update.message.text.split()[0].lower()
-	if((chat_id == chatAdmins or nome in admins) and comando == ".anuncio" ):
-		texto = update.message.text.split()
-		texto[0] = "<b>ANUNCIO:</b>\n"
-		if(len(texto) < 4):
-			bot.sendMessage(chat_id=update.message.chat_id, text="Anuncio muito curto! Falha no envio!")
+	sorteio = randint(0,100)
+	if (chat_id == chatAdmins or nome in admins) and comando == ".anuncio":
+		msg = update.message.text.split()
+		msg.remove(".anuncio")
+		msg = " ".join(msg)
+		texto = "<b>ANUNCIO:</b>\n" + msg
+		if(len(texto.split()) < 4):
+			bot.sendMessage(chat_id=update.message.chat_id, text="Anuncio muito curto!!")
 		else:
-			texto = " ".join(texto)
-			bot.sendMessage(chat_id="@AndroidSE", text=texto, parse_mode= "HTML")
+			bot.sendMessage(chat_id=chatPrincipal, text=texto, parse_mode= "HTML")
 			bot.sendMessage(chat_id=chatAdmins, text="Anucio feito com sucesso!")
+	elif (chat_id == chatAdmins or nome in admins) and comando == ".zoeira":
+		msg = update.message.text.split()
+		msg.remove(".zoeira")
+		msg = " ".join(msg)
+		bot.sendMessage(chat_id=chatPrincipal, text=texto, parse_mode= "HTML")
+		bot.sendMessage(chat_id=update.message.chat_id, text="Eu amo a zoeira!")
+	elif sorteio<15:
+		for l in linguagens:
+			if l in frase:
+				arquivo = l+".txt"
+				arqRespostas = open(arquivo,'r')		
+				respostas = arqRespostas.readlines()
+				arqRespostas.close()
+				for i in range(0,len(respostas)):
+					respostas[i] = respostas[i].strip('\n')
+				resposta = respostas[randint(0,len(respostas))]
+				prompt = "o bot falou de "+ l + "porque tirou um "+ sorteio+" no dado"
+				print(prompt)
+				break
+		bot.sendMessage(chat_id=update.message.chat_id, text=resposta)
 
 def main():
 	updater = Updater(token=token_telegram)
@@ -129,15 +161,14 @@ def main():
 	querocontribuir_handler = CommandHandler('querocontribuir', querocontribuir)
 	dispatcher.add_handler(querocontribuir_handler)
 
-	anuncio_handler = MessageHandler(Filters.text, anuncio)
-	updater.dispatcher.add_handler(anuncio_handler)
+	conversas_handler = MessageHandler(Filters.text, conversas)
+	updater.dispatcher.add_handler(conversas_handler)
 
 	#Função de boas vindas, desativada pra evitar flood
 	#welcome_handler = MessageHandler(Filters.status_update.new_chat_members, welcome)
 	#dispatcher.add_handler(welcome_handler)
 
 	updater.start_polling()
-
 
 if __name__ == '__main__':
 	main()
