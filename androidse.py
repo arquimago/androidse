@@ -119,9 +119,10 @@ def conversas(bot, update):
 			bot.sendMessage(chat_id=chatPrincipal, text=texto, parse_mode= "HTML")
 			bot.sendMessage(chat_id=chatAdmins, text="Anucio feito com sucesso!")
 	elif (chat_id == chatAdmins or nome in admins) and comando == ".zoeira":
-		msg = update.message.text.split()
-		msg.remove(".zoeira")
-		msg = " ".join(msg)
+		texto = update.message.text.split()
+		texto.remove(".zoeira")
+		texto = " ".join(texto)
+		print(msg)
 		bot.sendMessage(chat_id=chatPrincipal, text=texto, parse_mode= "HTML")
 		bot.sendMessage(chat_id=update.message.chat_id, text="Eu amo a zoeira!")
 	elif sorteio<15:
