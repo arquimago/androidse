@@ -122,7 +122,7 @@ def conversas(bot, update):
 		texto = update.message.text.split()
 		texto.remove(".zoeira")
 		texto = " ".join(texto)
-		print(msg)
+		print(texto)
 		bot.sendMessage(chat_id=chatPrincipal, text=texto, parse_mode= "HTML")
 		bot.sendMessage(chat_id=update.message.chat_id, text="Eu amo a zoeira!")
 	elif sorteio<20:
