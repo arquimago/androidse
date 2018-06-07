@@ -118,17 +118,14 @@ def conversas(bot, update):
 		bot.sendMessage(chat_id=chatPrincipal, text=texto, parse_mode= "HTML")
 		bot.sendMessage(chat_id=chat_id, text="Eu amo a zoeira!")
 	elif sorteio<20:
-		print("entrou")
 		for l in linguagens:
 			if l in frase:
 				arquivo = l+".txt"
 				arqRespostas = open(arquivo,'r')		
 				respostas = arqRespostas.readlines()
 				arqRespostas.close()
-				print("ate ja leu o arquivo")
-				for i in range(0,len(respostas)):
-					respostas[i] = respostas[i].strip('\n')
-				resposta = respostas[randint(0,len(respostas))]
+				numRespostas = len(respostas)
+				resposta = respostas[randint(0,numRespostas)]
 				prompt = "o bot falou de "+ l + "porque tirou um "+ sorteio+" no dado"
 				print(prompt)
 				break
