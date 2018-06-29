@@ -55,7 +55,7 @@ def welcome(bot, update):
 	bot.sendMessage(chat_id=chat_id, text=bemvindo)
 
 def git(bot, update):
-	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!")
+	bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/androidse sinta-se a vontade para fazer seu pull request!", parse_mode="HTML", disable_web_page_preview=True)
 
 def eventos(bot, update):
 	url = "https://api.meetup.com/2/events?key="+meetup_token+"&group_urlname=android-sergipe&sign=true"
@@ -91,7 +91,7 @@ def help(bot, update):
 	bot.sendMessage(chat_id=update.message.chat_id, text=texto)
 
 def docs(bot, update):
-	bot.sendMessage(chat_id=update.message.chat_id, text="Os links para documentos estão disponiveis no https://gist.github.com/arquimago/1c4a3dd775fc8d4fbc0d3e0aa617bb90")
+	bot.sendMessage(chat_id=update.message.chat_id, text="Os links para documentos estão disponiveis no https://gist.github.com/arquimago/1c4a3dd775fc8d4fbc0d3e0aa617bb90", parse_mode="HTML", disable_web_page_preview=True)
 
 def querocontribuir(bot, update):
 	nome = update.message.from_user.username
